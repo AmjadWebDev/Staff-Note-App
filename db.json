@@ -1,0 +1,47 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "message": "Changed the lump",
+      "date": "03-02-2020",
+      "attention": false,
+      "employee": "Thomas X"
+    },
+    {
+      "id": 2,
+      "message": "scaned all files",
+      "date": "13-09-2020",
+      "attention": true,
+      "employee": "Alex Z"
+    },
+    {
+      "id": 3,
+      "message": "cleaned the meeting room",
+      "date": "20-10-2020",
+      "attention": false,
+      "employee": "Maria H"
+    }
+  ],
+  "staff": [
+    {
+      "id": 1,
+      "firstName": "Thomas",
+      "lastName": "X"
+    },
+    {
+      "id": 2,
+      "firstName": "Alex",
+      "lastName": "Z"
+    },
+    {
+      "id": 3,
+      "firstName": "Maria",
+      "lastName": "H"
+    },
+    {
+      "firstName": "Amjad",
+      "lastName": "Sam",
+      "id": 4
+    }
+  ]
+}
