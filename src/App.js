@@ -10,23 +10,28 @@ import EditNoteModal from "./components/notes/EditNoteModal";
 import AddEmpModal from "./components/employees/AddEmpModal";
 import EmpListModal from "./components/employees/EmpListModal";
 
+import { Provider } from "react-redux";
+import store from "./store";
+
 const App = () => {
   useEffect(() => {
     // init Materialize js
     M.AutoInit();
   });
   return (
-    <Fragment>
-      <SearchBar />
-      <div className="container">
-        <AddBtn />
-        <AddNoteModal />
-        <EditNoteModal />
-        <AddEmpModal />
-        <EmpListModal />
-        <Notes />
-      </div>
-    </Fragment>
+    <Provider store={store}>
+      <Fragment>
+        <SearchBar />
+        <div className="container">
+          <AddBtn />
+          <AddNoteModal />
+          <EditNoteModal />
+          <AddEmpModal />
+          <EmpListModal />
+          <Notes />
+        </div>
+      </Fragment>
+    </Provider>
   );
 };
 
