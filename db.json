@@ -10,14 +10,14 @@
     {
       "id": 2,
       "message": "scaned all files",
-      "date": "13-09-2020",
+      "date": "09-13-2020",
       "attention": true,
       "employee": "Alex Z"
     },
     {
       "id": 3,
       "message": "cleaned the meeting room",
-      "date": "20-10-2020",
+      "date": "10-20-2020",
       "attention": false,
       "employee": "Maria H"
     }
