@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { addNote } from "../../actions/noteActions";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const AddNoteModal = () => {
+const AddNoteModal = ({ addNote }) => {
   const [message, setMessage] = useState("");
   const [attention, setAttention] = useState(false);
   const [employee, setEmployee] = useState("");
@@ -10,7 +13,15 @@ const AddNoteModal = () => {
     if (message === "" || employee === "") {
       M.toast({ html: "Please enter a message and employee" });
     } else {
-      console.log(message, employee, attention);
+      const newNote = {
+        message,
+        employee,
+        attention,
+        date: new Date(),
+      };
+      addNote(newNote);
+
+      M.toast({ html: `Note added by ${employee}` });
       //clear fields
       setMessage("");
       setEmployee("");
@@ -62,9 +73,13 @@ const AddNoteModal = () => {
   );
 };
 
+AddNoteModal.propTypes = {
+  addNote: PropTypes.func.isRequired,
+};
+
 const modalStyle = {
   width: "75%",
   height: "75%",
 };
 
-export default AddNoteModal;
+export default connect(null, { addNote })(AddNoteModal);

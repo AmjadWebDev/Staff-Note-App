@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { updateNote } from "../../actions/noteActions";
+import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const EditNoteModal = () => {
+const EditNoteModal = ({ current, updateNote }) => {
   const [message, setMessage] = useState("");
   const [attention, setAttention] = useState(false);
   const [employee, setEmployee] = useState("");
+
+  useEffect(() => {
+    if (current) {
+      setMessage(current.message);
+      setAttention(current.attention);
+      setEmployee(current.employee);
+    }
+  }, [current]);
 
   const onSubmit = () => {
     if (message === "" || employee === "") {
       M.toast({ html: "Please enter a message and employee" });
     } else {
-      console.log(message, employee, attention);
+      const updNote = {
+        id: current.id,
+        message,
+        employee,
+        attention,
+        date: new Date(),
+      };
+      updateNote(updNote);
+      M.toast({ html: `Note updated by ${employee}` });
+
       //clear fields
       setMessage("");
       setEmployee("");
@@ -25,9 +45,6 @@ const EditNoteModal = () => {
         <div className="row">
           <div className="input-field">
             <input type="text" name="message" value={message} onChange={(e) => setMessage(e.target.value)} />
-            <label htmlFor="message" className="active">
-              Note Message
-            </label>
           </div>
         </div>
         <div className="row">
@@ -55,11 +72,16 @@ const EditNoteModal = () => {
       </div>
       <div className="modal-footer">
         <a href="#!" onClick={onSubmit} className="modal-close waves-effect blue waves-light btn">
-          Enter
+          {current ? "Update" : "Enter"}
         </a>
       </div>
     </div>
   );
+};
+
+EditNoteModal.propTypes = {
+  current: PropTypes.object,
+  updateNote: PropTypes.func.isRequired,
 };
 
 const modalStyle = {
@@ -67,4 +89,6 @@ const modalStyle = {
   height: "75%",
 };
 
-export default EditNoteModal;
+const mapStateToProps = (state) => ({ current: state.note.current });
+
+export default connect(mapStateToProps, { updateNote })(EditNoteModal);

@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import NoteItem from "./NoteItem";
 import Preloader from "../layout/Preloader";
+import PropTypes from "prop-types";
+import { getNotes } from "../../actions/noteActions";
 
-const Notes = () => {
-  const [notes, setNotes] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+const Notes = ({ note: { notes, loading }, getNotes }) => {
   useEffect(() => {
     getNotes();
     // eslint-disable-next-line
   }, []);
 
-  const getNotes = async () => {
-    setLoading(true);
-    const res = await fetch("/notes");
-    const data = await res.json();
-
-    setNotes(data);
-    setLoading(false);
-  };
-  if (loading) {
+  if (loading || notes === null) {
     return <Preloader />;
   }
 
@@ -33,4 +25,13 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+Notes.propTypes = {
+  note: PropTypes.object.isRequired,
+  getNotes: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  note: state.note,
+});
+
+export default connect(mapStateToProps, { getNotes })(Notes);
