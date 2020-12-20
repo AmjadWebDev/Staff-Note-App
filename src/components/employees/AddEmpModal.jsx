@@ -1,18 +1,22 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { addStaff } from "../../actions/staffActions";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const AddEmpModal = () => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+const AddEmpModal = ({ addStaff }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const onSubmit = () => {
-    if (firstname === "" || lastname === "") {
+    if (firstName === "" || lastName === "") {
       M.toast({ html: "Please enter the first and last name" });
     } else {
-      console.log(firstname, lastname);
+      addStaff({ firstName, lastName });
+      M.toast({ html: `${firstName} ${lastName} was added as a new employee` });
       //clear fields
-      setFirstname("");
-      setLastname("");
+      setFirstName("");
+      setLastName("");
     }
   };
 
@@ -22,7 +26,7 @@ const AddEmpModal = () => {
         <h4>New Employee</h4>
         <div className="row">
           <div className="input-field">
-            <input type="text" name="firstname" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+            <input type="text" name="firstname" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
             <label htmlFor="firstname" className="active">
               First Name
             </label>
@@ -30,7 +34,7 @@ const AddEmpModal = () => {
         </div>
         <div className="row">
           <div className="input-field">
-            <input type="text" name="lastname" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+            <input type="text" name="lastname" value={lastName} onChange={(e) => setLastName(e.target.value)} />
             <label htmlFor="lastname" className="active">
               Last Name
             </label>
@@ -46,4 +50,8 @@ const AddEmpModal = () => {
   );
 };
 
-export default AddEmpModal;
+AddEmpModal.propTypes = {
+  addStaff: PropTypes.func.isRequired,
+};
+
+export default connect(null, { addStaff })(AddEmpModal);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { updateNote } from "../../actions/noteActions";
+import StaffSelectOptions from "../employees/StaffSelectOptions";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 
@@ -53,9 +54,7 @@ const EditNoteModal = ({ current, updateNote }) => {
               <option value="" disabled>
                 Select Employee
               </option>
-              <option value="Thomas X">Thomas X</option>
-              <option value="Alex Z">Alex Z</option>
-              <option value="Maria H">Maria H</option>
+              <StaffSelectOptions />
             </select>
           </div>
         </div>

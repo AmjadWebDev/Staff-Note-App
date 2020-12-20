@@ -1,18 +1,20 @@
 import React from "react";
-//import PropTypes from 'prop-types';
-//import M from 'materialize-css/dist/js/materialize.min.js';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { deleteStaff } from "../../actions/staffActions";
+import M from "materialize-css/dist/js/materialize.min.js";
 
-const EmpItem = ({ staf }) => {
-  // const onDelete = () => {
-  //   deleteTech(id);
-  //   M.toast({ html: 'Technician deleted' });
-  // };
+const EmpItem = ({ staf, deleteStaff }) => {
+  const onDelete = () => {
+    deleteStaff(staf.id);
+    M.toast({ html: "Employee deleted" });
+  };
 
   return (
     <li className="collection-item">
       <div>
         {staf.firstName} {staf.lastName}
-        <a href="#!" className="secondary-content">
+        <a href="#!" className="secondary-content" onClick={onDelete}>
           <i className="material-icons grey-text">delete</i>
         </a>
       </div>
@@ -20,9 +22,9 @@ const EmpItem = ({ staf }) => {
   );
 };
 
-// EmpItem.propTypes = {
-//   tech: PropTypes.object.isRequired,
-//   deleteTech: PropTypes.func.isRequired
-// };
+EmpItem.propTypes = {
+  staf: PropTypes.object.isRequired,
+  deleteStaff: PropTypes.func.isRequired,
+};
 
-export default EmpItem;
+export default connect(null, { deleteStaff })(EmpItem);

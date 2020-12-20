@@ -1,32 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import EmpItem from "./EmpItem";
+import { getStaff } from "../../actions/staffActions";
 
-const EmpListModal = () => {
-  const [employees, setEmployees] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+const EmpListModal = ({ staff: { stafs, loading }, getStaff }) => {
   useEffect(() => {
-    getEmployees();
+    getStaff();
     // eslint-disable-next-line
   }, []);
-
-  const getEmployees = async () => {
-    setLoading(true);
-    const res = await fetch("/staff");
-    const data = await res.json();
-
-    setEmployees(data);
-    setLoading(false);
-  };
 
   return (
     <div id="list" className="modal">
       <div className="modal-content">
         <h4>Staff List</h4>
-        <ul className="collection">{!loading && employees.map((staf) => <EmpItem staf={staf} key={staf.id} />)}</ul>
+        <ul className="collection">{!loading && stafs !== null && stafs.map((staf) => <EmpItem staf={staf} key={staf.id} />)}</ul>
       </div>
     </div>
   );
 };
 
-export default EmpListModal;
+EmpListModal.propTypes = {
+  staff: PropTypes.object.isRequired,
+  getStaff: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  staff: state.staff,
+});
+export default connect(mapStateToProps, { getStaff })(EmpListModal);
